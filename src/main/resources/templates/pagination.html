@@ -1,0 +1,29 @@
+<body>
+  <th:block th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}">
+    <th:block th:if="${page}==${pageNumber}">
+      <span>
+        이런 값
+      </span>
+    </th:block>
+    <th:block th:unless="${page}==${pageNumber}">
+      <span>
+        저런 값
+      </span>
+    </th:block>
+    <span th:if="${page} == ${pageNumber}" th:text="${pageNumber}" style="font-weight:bold"></span>
+
+    <span th:unless="${page} == ${pageNumber}" th:text="${pageNumber}"></span>
+  </th:block>
+  <br>
+  
+  <!-- 링크연결 -->
+  <th:block th:each="pageNumber : ${#numbers.sequence(1, 10)}">
+    <a th:href="@{/pagination1(page=${pageNumber})}" 
+    th:unless="${pageNumber==page}"
+    th:text="${pageNumber}"></a>
+    <a 
+    th:if="${pageNumber==page}"
+    th:text="${pageNumber}"></a>
+  </th:block>
+
+</body>

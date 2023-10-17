@@ -1,0 +1,16 @@
+
+
+<form action="/board/update" method="post">
+
+<p> 번호 : [[${board.id}]]</p>
+<p> 제목 : <input type="text" name="title" th:value="${board.title}"></p>
+ 
+<p> 내용 : <textarea name="content" cols="30" rows="10">[[ ${board.content} ]]</textarea></p>
+
+<p> 작성자 : <input type="text" name="writer" th:value="${board.writer}"></p>
+
+  <input type="hidden" name="id" th:value="${board.id}">
+  <input type="hidden" name="p" th:value="${p}">
+  <!-- 몇번 게시글을 수정할 것인가 primary key!!!!있어야함 근데 수정하면 안되므로 hidden으로 숨겨주기 -->
+  <button >수정완료</button>
+</form>

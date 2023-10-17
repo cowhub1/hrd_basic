@@ -1,0 +1,82 @@
+<p>번호 : [[${board.id}]]</p>
+<p>제목 : [[${board.title}]]</p>
+<p>내용 : [[${board.content}]]</p>
+<p>작성자 : [[${board.writer}]]</p>
+<!-- 
+<button th:text ="수정"
+ th:onclick="'location=\'/board/update?id=' + ${board.id}+ '\'' "></button> -->
+
+<!-- th: 접두어/사(namespace)-->
+<!-- <a th:href="@{/board/update(id=${board.id})}">수정</a> -->
+
+
+<button onclick="update()">수정</button>
+
+<button onclick="remove()">삭제</button>
+<br><br>
+<button>좋아요</button>
+<hr>
+
+
+
+
+<!-- board는 양방향으로 comment를 불러왔으니까 board.comments로 가능 -->
+<div class="comment">
+  <p>댓글💌</p>
+  <form action="/board/comment" method="post">
+    <input type="text" name="content" placeholder="댓글을 입력하세요.">
+    <input type="hidden" name="boardId" th:value="${board.id}">
+    <!-- board.id가져올수 있는 입력창 하나 만들기 name="boardId"아무거나 쓰고 @requestParam으로 가져오기-->
+    <button>입력</button>
+  </form>
+<ul th:each="comment : ${board.comments}">
+  <!-- ${board.comments}에서 각각의 요소(댓글)를 comment라는 변수에 할당하여 반복문 내에서 사용 -->
+  <li>
+    [[${comment.content}]]/[[${comment.writer}]]/[[${comment.creDate}]]
+    <button th:onclick="'removeComment('+${comment.id}+')'">삭제</button>
+ <!-- <button onclick="removeComment()">삭제</button> 위에 comment의 id를 인자로 받아오기-->
+  </li>
+</ul>
+</div>
+<hr>
+<div class="fileAtch">
+  <p>파일첨부💾</p>
+<ul th:each="fileAtch : ${board.fileAtchs}">
+  <li>
+    <a th:href="@{/download(id=${fileAtch.id})}">
+    [[${fileAtch.originalName}]]
+    </a>
+    <button th:onclick="'removeFile('+${fileAtch.id}+')'">삭제</button>
+ <!-- <button onclick="removeComment()">삭제</button> 위에 comment의 id를 인자로 받아오기-->
+  </li>
+</ul>
+</div>
+
+<button onclick="golist()">뒤로가기</button>
+<script>
+  function update() {
+    location = '/board/update?id=[[${board.id}]]&p=[[ ${p} ]]';
+  }
+  function remove() {
+    const isOk = confirm('삭제하시겠습니까?');
+    if (isOk) {
+      location = '/board/remove?id=[[${board.id}]]&p=[[ ${p} ]]';
+    }
+  }
+  function removeComment(id) {
+    const isOk = confirm('삭제하시겠습니까?');
+    if (isOk) {
+      location = `/board/comment/remove?id=${id}&boardId=[[${board.id}]]`;
+    }
+  }
+  function removeFile(id) {
+    const isOk = confirm('삭제하시겠습니까?');
+    if (isOk) {
+      location = `/board/fileAtch/remove?id=${id}&boardId=[[${board.id}]]`;
+    }
+  }
+  function golist() {
+    location='/board/list'
+  }
+ 
+</script>

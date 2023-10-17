@@ -1,0 +1,8 @@
+<script>
+  var errorMessage = '[[${errorMessage}]]';
+  // errorMessage가 비어 있지 않으면 경고 창을 표시합니다.
+    if (errorMessage) {
+    alert(errorMessage);
+    location = '/auth/signin';
+    }
+</script>

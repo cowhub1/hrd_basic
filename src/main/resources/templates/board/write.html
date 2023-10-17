@@ -1,0 +1,36 @@
+<!-- 게시판 -->
+<form action="/board/write" method="post" enctype="multipart/form-data">
+<!-- 제목 -->
+<input type="text" name="title" placeholder="제목을 입력하세요.">
+<br>
+<!-- <input type="file" name="file" multiple> -->
+<button>
+ <a href="/upload1">파일첨부</a>
+</button>
+<p th:text="${message}"></p>
+<br>
+<!-- 내용 -->
+<textarea name="content" cols="30" rows="10"></textarea>
+<!-- name이 중요!! 그래야 backend로 전달 됌 -->
+<br><br>
+
+<th:block th:if="${session.name}==null">
+<input type="text" name="writer" placeholder="작성자를 입력하세요.">
+</th:block>
+<th:block th:unless="${session.name}==null">
+<input type="text" name="writer" th:value="${session.name}" readonly>
+</th:block>
+<button>작성 완료</button>
+<button>
+ <a href="/board/list"> 목록 보기</a>
+</button>
+</form>
+
+
+<style>
+  a{
+    text-decoration:none;
+    color: black;
+  }
+</style>
+<!-- 작성자 : readonly, disable 흐리게보이는 속성 사용 -->
